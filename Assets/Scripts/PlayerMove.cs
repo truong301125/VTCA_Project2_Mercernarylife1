@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,40 +47,48 @@ public class PlayerMove : MonoBehaviour
 
 
         horizontal = Input.GetAxisRaw("Horizontal");
+
         if (horizontal > 0)
         {
-            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipX = false; // Quay mặt sang phải
             _animator.SetBool("IsWalking", true);
             isFacingRight = true;
         }
         else if (horizontal < 0)
         {
-            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = true; // Quay mặt sang trái
             _animator.SetBool("IsWalking", true);
             isFacingRight = false;
         }
         else
         {
             _animator.SetBool("IsWalking", false);
+            _animator.SetBool("IsIdle", true);
         }
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            isGrounded = false;
+            _animator.SetBool("IsJump", true);
         }
+
+
         if (Input.GetMouseButtonDown(0)) // Shoot
         {
-            Vector2 spwamPosition = transform.position;
+            _animator.SetTrigger("Shoot");
+            Vector2 spawnPosition = transform.position;
             //van toc vien dan
-            float bombSpeed = 50f;
+            float bulletSpeed = 10f;
             if (isFacingRight)
             {
-                spwamPosition += new Vector2(1, 0);
-                bombSpeed = 50;
+                spawnPosition += new Vector2(1, 0);
+                bulletSpeed = 10;
             }
             else
             {
-                spwamPosition += new Vector2(-1, 0);
-                bombSpeed = -50;
+                spawnPosition += new Vector2(-1, 0);
+                bulletSpeed = -10;
             }
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
@@ -89,18 +97,21 @@ public class PlayerMove : MonoBehaviour
             }
 
             GameObject bomb = Instantiate(bulletPrefab,
-                                spwamPosition, Quaternion.identity);
+                                spawnPosition, Quaternion.identity);
             //lay component bomb
             Bullet bombComponent = bomb.GetComponent<Bullet>();
 
-            bombComponent.setSpeed(bombSpeed);
+            bombComponent.setSpeed(bulletSpeed);
         }
+
+
 
         //if (Input.GetKeyDown(KeyCode.E)) // Interact with NPC
         //{
         //    InteractWithNPC();
         //}
     }
+
 
 
     //void InteractWithNPC()
@@ -117,6 +128,7 @@ public class PlayerMove : MonoBehaviour
     //        }
     //    }
     //}
+
     private void FixedUpdate()
     {
         rb2D.velocity = new Vector2(horizontal * moveSpeed, rb2D.velocity.y);

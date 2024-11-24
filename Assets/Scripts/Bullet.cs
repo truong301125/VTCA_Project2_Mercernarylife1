@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,13 @@ public class Bullet : MonoBehaviour
     public void setSpeed(float newSpeed)
     {
         speed = newSpeed;
+    }
+    void FixedUpdate()
+    {
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(speed, 0); // Di chuyển đạn theo trục X
+        }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {

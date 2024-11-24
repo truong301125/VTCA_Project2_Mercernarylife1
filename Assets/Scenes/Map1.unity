@@ -1547,7 +1547,12 @@ MonoBehaviour:
   jumpForce: 10
   maxHealth: 100
   bulletPrefab: {fileID: 8048878706252617228, guid: bbb8a703f25b7e94999761caaf707307, type: 3}
-  bulletSpeed: 10
+  rb2D: {fileID: 923835610}
+--- !u!50 &923835610 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 4599649198079007531, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
+  m_PrefabInstance: {fileID: 1164369089}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &930508793
 GameObject:
   m_ObjectHideFlags: 0
