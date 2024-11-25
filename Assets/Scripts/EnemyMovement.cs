@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
             }
         }
         // neu quai cham phai vien dan se chet
-        if (collision.gameObject.CompareTag("VienDan"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             //tru hp
             if (hp <= 0)
