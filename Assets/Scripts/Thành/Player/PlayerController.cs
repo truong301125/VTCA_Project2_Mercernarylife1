@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
         if (OnCrouchEvent == null)
             OnCrouchEvent = new BoolEvent();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void FixedUpdate()
@@ -146,4 +148,5 @@ public class PlayerController : MonoBehaviour
         //theScale.x *= -1;
         //transform.localScale = theScale;
     }
+    
 }
