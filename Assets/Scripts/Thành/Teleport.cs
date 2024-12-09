@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Teleport : MonoBehaviour
 {
-    public string sceneToLoad; // Tên scene bạn muốn teleport đến
+    //public string sceneToLoad; // Tên scene bạn muốn teleport đến
     public Vector3 playerSpawnPosition; // Vị trí spawn cho người chơi
 
     public Animator transition;
@@ -45,23 +45,21 @@ public class Teleport : MonoBehaviour
             PlayerPrefs.SetFloat("SpawnY", playerSpawnPosition.y);
             PlayerPrefs.SetFloat("SpawnZ", playerSpawnPosition.z);
 
-            StartCoroutine(LoadSceneWithTransition());           
+            StartCoroutine(LoadSceneWithTransition(SceneManager.GetActiveScene().buildIndex + 1));           
         }
 
     }
-    private IEnumerator LoadSceneWithTransition()
+    private IEnumerator LoadSceneWithTransition(int levelIndex)
     {
         // Bật animation chuyển cảnh
-        if (transition != null)
-        {
-            transition.SetTrigger("Start");
-        }
+        transition.SetTrigger("Start");
+        
 
         // Đợi animation hoàn tất
         yield return new WaitForSeconds(transitionTime);
 
         // Load scene mới
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(levelIndex);
     }
 
 }

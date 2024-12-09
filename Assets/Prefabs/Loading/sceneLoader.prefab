@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6382824098040065437
 RectTransform:
   m_ObjectHideFlags: 0
@@ -258,7 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923ca8838f802c64380033c5a223d1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 
   playerSpawnPosition: {x: 0, y: 0, z: 0}
   transition: {fileID: 1801328507159742132}
   transitionTime: 1
