@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Animator animator;
     [SerializeField] private float hp = 30;
+
+    public int ID { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class Enemy : MonoBehaviour
         rightBoundary = transform.position.x + boundary;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        ID = 0;
     }
 
     // Update is called once per frame
