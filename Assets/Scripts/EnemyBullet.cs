@@ -6,6 +6,8 @@ public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] private float speed = 1f;
     private Rigidbody2D rb2D;
+
+    public float damage = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +34,12 @@ public class EnemyBullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject, 3);
+        PlayerStats player= collision.gameObject.GetComponent<PlayerStats>();
+        if (player != null)
+        {
+            player.TakeDamage(damage);
+        }
+        
     }
+
 }
