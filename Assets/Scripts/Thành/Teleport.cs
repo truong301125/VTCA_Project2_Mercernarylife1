@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class Teleport : MonoBehaviour
 {
     //public string sceneToLoad; // Tên scene bạn muốn teleport đến
-    public Vector3 playerSpawnPosition; // Vị trí spawn cho người chơi
+    //public Vector3 playerSpawnPosition; // Vị trí spawn cho người chơi
+    public Transform spawnPosition;
 
     public Animator transition;
     public float transitionTime = 1f;
@@ -19,28 +20,29 @@ public class Teleport : MonoBehaviour
 
         truckFire.Pause();
         truckRun.SetBool("Run", false);
-        
-        if (PlayerPrefs.HasKey("SpawnX") && PlayerPrefs.HasKey("SpawnY") && PlayerPrefs.HasKey("SpawnZ"))
-        {
-            // Đặt vị trí spawn cho người chơi
-            Vector3 spawnPosition = new Vector3(
-                PlayerPrefs.GetFloat("SpawnX"),
-                PlayerPrefs.GetFloat("SpawnY"),
-                PlayerPrefs.GetFloat("SpawnZ")
-            );
+
+        //if (PlayerPrefs.HasKey("SpawnX") && PlayerPrefs.HasKey("SpawnY") && PlayerPrefs.HasKey("SpawnZ"))
+        //{
+        //    // Đặt vị trí spawn cho người chơi
+        //    Vector3 spawnPosition = new Vector3(
+        //        PlayerPrefs.GetFloat("SpawnX"),
+        //        PlayerPrefs.GetFloat("SpawnY"),
+        //        PlayerPrefs.GetFloat("SpawnZ")
+        //    );
 
             // Tìm đối tượng người chơi và đặt vị trí
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                player.transform.position = spawnPosition;
-            }
+        //GameObject player = GameObject.FindGameObjectWithTag("Player");
+        //Transform newspawnPosition= player.transform;
+        //if (player != null)
+        //{
+        //    player.transform.position = newspawnPosition;
+        //}
 
-            // Xóa dữ liệu spawn sau khi sử dụng
-            PlayerPrefs.DeleteKey("SpawnX");
-            PlayerPrefs.DeleteKey("SpawnY");
-            PlayerPrefs.DeleteKey("SpawnZ");
-        }
+        //    // Xóa dữ liệu spawn sau khi sử dụng
+        //    PlayerPrefs.DeleteKey("SpawnX");
+        //    PlayerPrefs.DeleteKey("SpawnY");
+        //    PlayerPrefs.DeleteKey("SpawnZ");
+        //}
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,13 +50,16 @@ public class Teleport : MonoBehaviour
         {
             truckRun.SetBool("Run", true);
             truckFire.Play();
-            Destroy(other.gameObject);
-            // Đặt vị trí cho người chơi
-            PlayerPrefs.SetFloat("SpawnX", playerSpawnPosition.x);
-            PlayerPrefs.SetFloat("SpawnY", playerSpawnPosition.y);
-            PlayerPrefs.SetFloat("SpawnZ", playerSpawnPosition.z);
-
-            StartCoroutine(LoadSceneWithTransition(1f,SceneManager.GetActiveScene().buildIndex + 1));           
+            DontDestroyOnLoad(other.gameObject);
+            ////Destroy(other.gameObject);
+            //// Đặt vị trí cho người chơi
+            //PlayerPrefs.SetFloat("SpawnX", playerSpawnPosition.x);
+            //PlayerPrefs.SetFloat("SpawnY", playerSpawnPosition.y);
+            //PlayerPrefs.SetFloat("SpawnZ", playerSpawnPosition.z);
+            
+            
+            StartCoroutine(LoadSceneWithTransition(1f,SceneManager.GetActiveScene().buildIndex + 1));
+            
         }
 
     }
@@ -70,6 +75,9 @@ public class Teleport : MonoBehaviour
 
         // Load scene mới
         SceneManager.LoadScene(levelIndex);
+
+        
+
     }
 
 }
