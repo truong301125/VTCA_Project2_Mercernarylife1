@@ -1666,8 +1666,9 @@ GameObject:
   m_Component:
   - component: {fileID: 575389361}
   - component: {fileID: 575389362}
+  - component: {fileID: 575389363}
   m_Layer: 5
-  m_Name: HpBar
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1691,7 +1692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53.106, y: 2.75}
+  m_AnchoredPosition: {x: -533, y: 393}
   m_SizeDelta: {x: 426, y: 94.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &575389362
@@ -1745,6 +1746,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &575389363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575389360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9d46c07dd1626448fb8c4edcc11473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 575389362}
 --- !u!1 &583296567
 GameObject:
   m_ObjectHideFlags: 0
@@ -7660,6 +7674,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6888473602265701274, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1417796275}
+    - targetCorrespondingSourceObject: {fileID: 6888473602265701274, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1417796284}
   m_SourcePrefab: {fileID: 100100000, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
 --- !u!1001 &897216713
 PrefabInstance:
@@ -9227,6 +9244,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6834471625742726225, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
   m_PrefabInstance: {fileID: 895165140}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1417796284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417796263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf50ba0735ee15343bbede1980e65bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  healthBar: {fileID: 575389363}
 --- !u!1 &1434294019
 GameObject:
   m_ObjectHideFlags: 0
@@ -12835,8 +12867,8 @@ SceneRoots:
   - {fileID: 895165140}
   - {fileID: 1676860046}
   - {fileID: 149910492}
-  - {fileID: 353287276}
   - {fileID: 2046118127}
+  - {fileID: 353287276}
   - {fileID: 1350778296}
   - {fileID: 1189723659}
   - {fileID: 4685676964678564326}

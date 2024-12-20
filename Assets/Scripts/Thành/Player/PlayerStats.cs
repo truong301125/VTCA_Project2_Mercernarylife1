@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Player_Hpbar healthBar;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyUp(KeyCode.G))
+        {
+            TakeDamage(20);
+        }
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
             Die();

@@ -7,7 +7,7 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] private float speed = 1f;
     private Rigidbody2D rb2D;
 
-    public float damage = 10f;
+    public int damage = 10;
     // Start is called before the first frame update
     void Start()
     {
