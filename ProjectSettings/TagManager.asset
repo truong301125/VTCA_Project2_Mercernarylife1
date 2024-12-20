@@ -8,6 +8,8 @@ TagManager:
   - Bullet
   - Wall
   - SpawnPosition
+  - BossBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
