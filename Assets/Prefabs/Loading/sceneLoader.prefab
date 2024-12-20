@@ -258,9 +258,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923ca8838f802c64380033c5a223d1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawnPosition: {x: 0, y: 0, z: 0}
+  playerSpawnPosition: {x: -2.39, y: -0.24, z: 0.15}
   transition: {fileID: 1801328507159742132}
   transitionTime: 1
+  truckRun: {fileID: 0}
+  truckFire: {fileID: 0}
 --- !u!1 &7254865487686770994
 GameObject:
   m_ObjectHideFlags: 0

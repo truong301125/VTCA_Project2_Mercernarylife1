@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923ca8838f802c64380033c5a223d1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosition: {fileID: 9112880997453809731, guid: 93a78781db9c0c54285e996ec963b070, type: 3}
+  playerSpawnPosition: {x: -2.39, y: -0.24, z: 0.15}
   transition: {fileID: 1460771959}
   transitionTime: 1
   truckRun: {fileID: 8550336}
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923ca8838f802c64380033c5a223d1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosition: {fileID: 0}
+  playerSpawnPosition: {x: 0, y: 0, z: 0}
   transition: {fileID: 1460771959}
   transitionTime: 1
   truckRun: {fileID: 8550336}
@@ -8493,7 +8493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3015177726441288540, guid: 45cf7715409264e4e9318231f72386f2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3022658875029960775, guid: 45cf7715409264e4e9318231f72386f2, type: 3}
       propertyPath: m_Alpha
