@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BossXanh : MonoBehaviour
@@ -73,13 +74,13 @@ public class BossXanh : MonoBehaviour
         {
             speed = -Mathf.Abs(speed);
             spriteRenderer.flipX = true; // Quay mặt trái
-            animator.SetBool("Walk", true);
+            /*animator.SetBool("Walk", true);*/
         }
         else if (transform.position.x <= leftBoundary)
         {
             speed = Mathf.Abs(speed);
             spriteRenderer.flipX = false; // Quay mặt phải
-            animator.SetBool("Walk", true);
+            /*animator.SetBool("Walk", true);*/
         }
 
         // Di chuyển theo trục X
@@ -166,8 +167,24 @@ public class BossXanh : MonoBehaviour
 
             animator.SetBool("Shield", true); // Bật animation Shield
             StartCoroutine(StopShieldAnimation()); // Gọi Coroutine để tắt Shield sau một khoảng thời gian
+
+            //tru hp
+            if (hp <= 0)
+            {
+                animator.SetBool("Shield", false);
+                animator.SetBool("Die", true);
+                //hieu ung khi boss bi trung dan                               
+                Destroy(gameObject, 2f);
+            }
+            else
+            {
+                hp -= 10;//so mau boss mat khi bi danh trung
+                Debug.Log("-10 HP");
+            }
         }
+
     }
+
 
     private IEnumerator StopShieldAnimation()
     {
@@ -176,5 +193,4 @@ public class BossXanh : MonoBehaviour
         speed = 1f;
         animator.SetBool("Shield", false);
     }
-
 }

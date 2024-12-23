@@ -1,21 +1,27 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 1f;
-    private Rigidbody2D rb2D;
-    [SerializeField] private float boundary;
-    private float leftBoundary, rightBoundary;
+    [SerializeField] private float speed = 1f; // Tốc độ di chuyển của enemy
+    [SerializeField] private float boundary; // Khoảng cách di chuyển tối đa
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float hp = 30; // Máu của enemy
+    [SerializeField] private float shootingRange = 4f; // Tầm bắn
+    [SerializeField] private float fireRate = 1f; // Tốc độ bắn
+    [SerializeField] private GameObject bulletPrefab; // Prefab của đạn
+    [SerializeField] private float bulletSpeed = 10f; // Tốc độ của đạn
+    [SerializeField] private Transform player; // Tham chiếu tới player
+
+    private float leftBoundary, rightBoundary;
+    private float fireCooldown = 0f;
     private Animator animator;
-    [SerializeField] private float hp = 30;
+    private Rigidbody2D rb2D;
+
 
     public GameObject destructionFX;
 
-    public int ID { get; set; }
-    // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -24,70 +30,84 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
 
-        ID = 0;
+        // Đặt hướng di chuyển ban đầu sang trái
+        speed = -Mathf.Abs(speed);
+        spriteRenderer.flipX = true; // Quay mặt trái
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (transform.position.x <= leftBoundary)//boundary la moc de cho enemy quay dau lai
-        {
-            speed = Mathf.Abs(speed);
-            animator.SetBool("Walk", true);
-            // xoay mat
-            spriteRenderer.flipX = false;
+        // Di chuyển enemy
+        MoveEnemy();
 
-        }
-        else if (transform.position.x >= rightBoundary)
+        // Bắn đạn nếu player trong tầm bắn và cùng hướng
+        TryShoot();
+    }
+
+    private void MoveEnemy()
+    {
+        // Đổi hướng di chuyển khi đạt tới ranh giới
+        if (transform.position.x >= rightBoundary)
         {
             speed = -Mathf.Abs(speed);
+            spriteRenderer.flipX = true; // Quay mặt trái
             animator.SetBool("Walk", true);
-            // xoay mat
-            spriteRenderer.flipX = true;
         }
-        //var leftBoundary = transform.position.x - boundary;
+        else if (transform.position.x <= leftBoundary)
+        {
+            speed = Mathf.Abs(speed);
+            spriteRenderer.flipX = false; // Quay mặt phải
+            animator.SetBool("Walk", true);
+        }
+
+        // Di chuyển theo trục X
         transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void TryShoot()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        // Kiểm tra khoảng cách giữa enemy và player
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+        // Kiểm tra nếu player trong tầm bắn và cùng hướng với enemy
+        bool isPlayerInDirection = (speed > 0 && player.position.x > transform.position.x) ||
+                                   (speed < 0 && player.position.x < transform.position.x);
+
+        if (distanceToPlayer <= shootingRange && isPlayerInDirection)
         {
-            animator.SetBool("isAttacking", true);
-            //neu nhan vat cham vao phia sau thi doi huong
-            //vi tri cua nhan vat va vi tri cua boss
-            var playerPositison = collision.gameObject.transform.position;// day la 2 ham khai bao vi tri cua boss va player    
-            var bossPosition = transform.position;//
-            if (speed > 0 && playerPositison.x < bossPosition.x)
+            fireCooldown -= Time.deltaTime; // Giảm thời gian hồi chiêu
+
+            if (fireCooldown <= 0f)
             {
-                speed = -speed;
-            }
-            else if (speed < 0 && playerPositison.x > bossPosition.x)
-            {
-                speed = -speed;
+                Shoot();
+                fireCooldown = 1f / fireRate; // Đặt lại thời gian hồi chiêu
             }
         }
-        //// neu quai cham phai vien dan se chet
-        //if (collision.gameObject.CompareTag("Bullet"))
-        //{
-        //    //tru hp
-        //    if (hp <= 0)
-        //    {
-        //        //hieu ung khi boss bi trung dan                               
-        //        Destroy(gameObject);
-        //    }
-        //    else
-        //    {
-        //        hp -= 10;//so mau boss mat khi bi danh trung               
-        //    }
-        //}
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    private void Shoot()
     {
-        // neu nhan vat chay ra khoi pham vi tan cong thi vao lai trang thai di chuyen
-        if (collision.gameObject.CompareTag("Player"))
+        // Tạo viên đạn tại vị trí hiện tại của enemy
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+        // Gắn Rigidbody2D vào đạn để di chuyển
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            animator.SetBool("isAttacking", false);
+            // Xác định hướng bắn dựa trên hướng di chuyển của enemy
+            Vector2 shootDirection = speed > 0 ? Vector2.right : Vector2.left;
+            rb.velocity = shootDirection * bulletSpeed;
         }
+
+        // Hủy viên đạn sau 5 giây để tránh tràn bộ nhớ
+        Destroy(bullet, 5f);
+    }      
+
+    void OnDrawGizmosSelected()
+    {
+        // Hiển thị tầm bắn trong Scene
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, shootingRange);
     }
     public void TakeDamage(float damage)
     {
