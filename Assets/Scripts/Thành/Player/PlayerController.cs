@@ -82,11 +82,11 @@ public class PlayerController : MonoBehaviour
             // If crouching
             if (crouch)
             {
-                //if (!m_wasCrouching)
-                //{
-                //    m_wasCrouching = true;
-                //    OnCrouchEvent.Invoke(true);
-                //}
+                if (!m_wasCrouching)
+                {
+                    m_wasCrouching = true;
+                    OnCrouchEvent.Invoke(true);
+                }
 
                 // Reduce the speed by the crouchSpeed multiplier
                 move *= m_CrouchSpeed;
