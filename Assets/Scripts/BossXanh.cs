@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 public class BossXanh : MonoBehaviour
@@ -173,8 +173,8 @@ public class BossXanh : MonoBehaviour
             {
                 animator.SetBool("Shield", false);
                 animator.SetBool("Die", true);
-                //hieu ung khi boss bi trung dan                               
-                Destroy(gameObject, 2f);
+                                             
+                Destroy(gameObject);
             }
             else
             {

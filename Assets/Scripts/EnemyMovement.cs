@@ -120,6 +120,7 @@ public class EnemyMovement : MonoBehaviour
     private void Die()
     {
         Instantiate(destructionFX, transform.position, Quaternion.identity);
-        Destroy(gameObject); 
+        Destroy(gameObject);
+        
     }
 }
