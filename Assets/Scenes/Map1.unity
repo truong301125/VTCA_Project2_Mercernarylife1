@@ -7305,6 +7305,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 81420340939811396, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
+      propertyPath: m_JumpForce
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 81420340939811396, guid: 873c066afc9ff374eabbb8a5d0955a8f, type: 3}
       propertyPath: m_CrouchSpeed
       value: 0
       objectReference: {fileID: 0}
